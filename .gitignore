@@ -2,3 +2,7 @@
 *.ko
 *.cmd
 *.order
+*.mod*
+Module.symvers
+.cache
+*.json
