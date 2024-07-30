@@ -12,6 +12,11 @@ __bpf_kfunc __u64 bpf_kep_read_counter(int counter) {
 	return ret;
 }
 
+// Sum of two u64 vectors of size 2 using _mm_add_epi64 
+//__bpf_kfunc void bpf_kep_add_two_u64(__u64 *a, __u64 *b, __u64 *sum) {
+//	_mm_add_epi64((__m64 *)a, (__m64 *)b, (__m64 *)sum);
+//}
+
 BTF_SET8_START(bpf_task_set);
 BTF_ID_FLAGS(func, bpf_kep_read_counter);
 BTF_SET8_END(bpf_task_set);
@@ -23,7 +28,8 @@ static const struct btf_kfunc_id_set bpf_task_kfunc_set = {
 
 int init_kep(void)
 {
-    register_btf_kfunc_id_set(BPF_PROG_TYPE_XDP, &bpf_task_kfunc_set);
+    register_btf_kfunc_id_set(BPF_PROG_TYPE_UNSPEC, &bpf_task_kfunc_set);
+    //register_btf_kfunc_id_set(BPF_PROG_TYPE_XDP, &bpf_task_kfunc_set);
     printk(KERN_INFO "Hello world\n");
     return 0;
 }
